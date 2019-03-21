@@ -1,7 +1,16 @@
-Promoted by Socket.io Documentation
+#Promoted by Socket.io Documentation
 
 # Chat with Javascript Sockets
 Basic chat application. It requires almost no basic prior knowledge of Node.JS or Socket.IO, so it’s ideal for users of all knowledge levels.
+
+
+##Main Functionalities.
+
+-Broadcast a message to connected users when someone connects or disconnects.
+-Add support for nicknames.
+-Don’t send the same message to the user that sent it himself. Instead, append the message directly as soon as he presses enter.
+
+... and improving!
 
 ## Getting Started
 
@@ -35,12 +44,12 @@ Perhaps you could use heroku.
 * Javascript
 * Node Modules: Express, socket.io
 
-Main Functionalities.
+##License
+This project is licensed under the MIT License - see the LICENSE.md file for details
 
--Broadcast a message to connected users when someone connects or disconnects.
--Add support for nicknames.
--Don’t send the same message to the user that sent it himself. Instead, append the message directly as soon as he presses enter.
-
-... and improving!
+Acknowledgments
+Hat tip to anyone whose code was used
+Inspiration
+etc
 
 Have Fun!
