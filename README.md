@@ -1,10 +1,9 @@
-#Promoted by Socket.io Documentation
-
 # Chat with Javascript Sockets
+### Promoted by Socket.io Documentation
 Basic chat application. It requires almost no basic prior knowledge of Node.JS or Socket.IO, so it’s ideal for users of all knowledge levels.
 
 
-##Main Functionalities.
+## Main Functionalities.
 
 -Broadcast a message to connected users when someone connects or disconnects.
 -Add support for nicknames.
