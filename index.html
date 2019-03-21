@@ -8,9 +8,16 @@
       form { background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; }
       form input { border: 0; padding: 10px; width: 90%; margin-right: .5%; }
       form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
-      #messages { list-style-type: none; margin: 0; padding: 0; }
+      #messages, #people { list-style-type: none; margin: 0; padding: 0; }
       #messages li { padding: 5px 10px; }
+      #people li { padding: 5px 10px; }
       #messages li:nth-child(odd) { background: #eee; }
+      #people li:nth-child(odd) { background: #eee; color: green;}
+     .grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-gap: 10px;
+     }
     </style>
     <script src="/socket.io/socket.io.js"></script>
     <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
@@ -19,6 +26,7 @@
             var socket = io();
             socket.on('usernick',function(usernick){
                 $('#usernick').text(usernick);
+                $('#people').append($('<li>').text(usernick));
             });
             $('form').submit(function(e){
             e.preventDefault(); // prevents page reloading
@@ -40,8 +48,17 @@
     </script>
   </head>
   <body>
-    <h2 id="usernick"></h2>
-    <ul id="messages"></ul>
+      <h2 id="usernick"></h2>
+      <div class="grid">
+          <div>
+              <h2>Messages</h2>
+              <ul id="messages"></ul>
+          </div>
+          <div>
+              <h2>Online</h2>
+              <ul id="people"></ul>
+          </div>
+      </div>
     <form action="">
       <input id="m" autocomplete="off" placeholder="Say Hi!"/><button>Send</button>
     </form>
