@@ -33,15 +33,11 @@
             // set endpoint and your access key
             socket.on('ip',function(ip,access_key){
             // get the API result via jQuery.ajax
-            alert(ip)
-            $.ajax({
-                url: 'http://api.ipstack.com/' + ip + '?access_key=' + access_key,   
-                dataType: 'jsonp',
-                success: function(json) {
-
-                // output the "capital" object inside "location"
-                    alert(json.location.capital);
-                                
+                $.ajax({
+                    url: 'http://api.ipstack.com/' + ip + '?access_key=' + access_key,   
+                    dataType: 'jsonp',
+                    success: function(json) {
+                        socket.emit('ip data',json);
                     }
                 });   
             });
