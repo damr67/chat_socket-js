@@ -13,26 +13,46 @@
       #people li { padding: 5px 10px; }
       #messages li:nth-child(odd) { background: #eee; }
       #people li:nth-child(odd) { background: #eee; color: green;}
-     .grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      grid-gap: 10px;
-     }
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-gap: 10px;
+        }
+    .span-col-4{grid-column: span 4 / auto;}
+
+    .span-col-3{grid-column: span 3 / auto;}
     </style>
     <script src="/socket.io/socket.io.js"></script>
     <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
     <script>
-        $(function () {
-            var socket = io();
-            socket.on('usernick',function(usernick){
-                $('#usernick').text(usernick);
-                $('#people').append($('<li>').text(usernick));
+    $(function () {
+            var socket = io();     
+            $.getJSON("https://jsonip.com?callback=?", function(data) {
+                socket.emit('ip',data.ip);
             });
+            // set endpoint and your access key
+            socket.on('ip',function(ip,access_key){
+            // get the API result via jQuery.ajax
+            alert(ip)
+            $.ajax({
+                url: 'http://api.ipstack.com/' + ip + '?access_key=' + access_key,   
+                dataType: 'jsonp',
+                success: function(json) {
+
+                // output the "capital" object inside "location"
+                    alert(json.location.capital);
+                                
+                    }
+                });   
+            });
+            
             $('form').submit(function(e){
-            e.preventDefault(); // prevents page reloading
-            socket.emit('chat message', $('#m').val());
-            $('#m').val('');
-            return false;
+                e.preventDefault(); // prevents page reloading
+                socket.emit('chat message', $('#m').val());
+                socket.emit('user',document.getElementById('u').value);
+                $('#m').val('');
+                document.getElementById('u').setAttribute("disabled", "disabled");
+                return false;
             });
             socket.on('chat message', function(msg){
                 $('#messages').append($('<li>')
@@ -44,23 +64,31 @@
             socket.on('user disconnect',function(msg){
                 $('#messages').append($('<li>').text(msg));
             });
+
         });
-    </script>
+        </script>
   </head>
-  <body>
-      <h2 id="usernick"></h2>
-      <div class="grid">
-          <div>
-              <h2>Messages</h2>
-              <ul id="messages"></ul>
-          </div>
-          <div>
-              <h2>Online</h2>
-              <ul id="people"></ul>
-          </div>
-      </div>
+  <body>  
+      <h1 id="ipaddress"></h1>
+        <div class="grid">
+            <div class="span-col-4">
+                <h1>Username</h1>
+            </div>
+            <div class="span-col-3">
+                <input id="u" type="text" placeholder="username">
+            </div>
+            <div>
+                <h2>Online</h2>
+                <ul id="people"></ul> 
+            </div>
+            <div class="span-col-4">
+                <h2>Messages</h2>
+                <ul id="messages"></ul>
+            </div>
+        </div>  
     <form action="">
-      <input id="m" autocomplete="off" placeholder="Say Hi!"/><button>Send</button>
+      <input id="m" autocomplete="off" placeholder="Say Hi!"/><button id="send" onclick="sending()">Send</button>
     </form>
+    
   </body>
 </html>

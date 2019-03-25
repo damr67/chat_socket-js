@@ -1,25 +1,31 @@
 var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
-
-var users_nick = 1  ;
+var access_key = '11eb106338b230089048c0bd799c7925';
 
 app.get('/', function(req, res){
   res.sendFile(__dirname + '/index.html');
 });
 
+
 io.on('connection', function(socket){
-  var usernick = 'user'+ users_nick;
-  io.emit('usernick',usernick);
-  io.emit('user connected', usernick+' has join the room.');
+  io.emit('user connected', 'Somedboy has join the room.');
   socket.on('chat message',function(msg){
-    io.emit('chat message',usernick+': '+msg);
+    io.emit('chat message',msg);
   }); 
-  users_nick++;
-  socket.on('disconnect',function(){
-    io.emit('user disconnect', usernick+' has left the room.');
-    users_nick--;
+  
+  socket.on('user',function(user){
+    console.log(user);
+  });
+
+  socket.on('ip',function(ip){
+    var ip2 = ip;
+    io.emit('ip',ip2,access_key);
   })
+
+  socket.on('disconnect',function(){
+    io.emit('user disconnect', 'Somedboy has left the room.');
+  });
 });
 
 http.listen(3000, function(){

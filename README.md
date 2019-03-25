@@ -8,6 +8,8 @@ Basic chat application. It requires almost no basic prior knowledge of Node.JS o
 -Broadcast a message to connected users when someone connects or disconnects.
 -Add support for nicknames.
 -Don’t send the same message to the user that sent it himself. Instead, append the message directly as soon as he presses enter.
+-Get Ip client info and send it to server. Usse IPSTACK API.
+(https://jsonip.com?callback=?)(http://api.ipstack.com/)
 -Show who’s online.
 
 ... and improving!
